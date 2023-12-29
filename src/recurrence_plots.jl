@@ -54,7 +54,7 @@ function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",ma
         try
             max_val = maximum(first.(zipped_tups))
             println("\nDiagonal largest sequence size and total length are")
-            print(max_val,cur_len)
+            print(max_val," and ", cur_len)
             cur_p = AnalyticComb.p_val_weighted(p,q,max_val,cur_len)
             println("\nProbability:")
             print(cur_p)
