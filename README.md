@@ -3,7 +3,6 @@
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://fargolo.github.io/SymbolicInference.jl/stable/)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://fargolo.github.io/SymbolicInference.jl/dev/)
 [![Build Status](https://github.com/fargolo/SymbolicInference.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/fargolo/SymbolicInference.jl/actions/workflows/CI.yml?query=branch%3Amain)
-<<<<<<< HEAD
 
 Probability-based inferences based on the symbolic method.  
 
@@ -24,5 +23,3 @@ Since each pair of states is mapped into a binary value ('close enough',1, or 'n
 The procedure in `double_inference_weighted()` iterates over [recurrence matrices](https://juliadynamics.github.io/DynamicalSystemsDocs.jl/recurrenceanalysis/stable/) diagonals and checks whether the size of the longest consecutive sequence is unexpectedly large. 
 
 ## Graphs  
-=======
->>>>>>> cc4410ab9b13fc90e3d8780f50a37ce949aa872b

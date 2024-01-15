@@ -3,10 +3,9 @@ double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",max_window=
 
 Returns set of probabilities associated with consecutive runs in off-diagonals.
 
-Argument `seqs` sets the type of consecutive sequences.  
-Could be either 'double' (recurrences and non-recurrences), 'recurrences' or 'poincare' (non-recurrences).  
-The first n diagonals (given by `max_window` argument) are considered.
-See `AnalyticComb.p_val_weighted` and  `AnalyticComb.weighted_bin_runs_coeff`.  
+Argument `seqs` sets the type of consecutive sequences: either 'double' (recurrences and non-recurrences), 
+'recurrences' or 'poincare' (non-recurrences).  The first n diagonals (given by `max_window` argument) are considered.
+See also `AnalyticComb.p_val_weighted` and  `AnalyticComb.weighted_bin_runs_coeff`.  
 """
 function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",max_window=6)
 
