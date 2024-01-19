@@ -10,14 +10,14 @@ See also `AnalyticComb.p_val_weighted` and  `AnalyticComb.weighted_bin_runs_coef
 function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",max_window=6)
 
     if seqs ∉ ["double","recurrences","poincare"]
-        println("seqs must be either 'double', 'recurrences' or 'poincare'")
+        println("'seqs' must be either 'double', 'recurrences' or 'poincare'")
         return(NaN)
     end 
 
     mat_len = dim(rec_matrix)
     
     if mat_len < max_window
-        println("max_window must be smaller than matrix length")
+        println("'max_window' must be smaller than matrix length")
         return(NaN)
     end 
     
@@ -26,13 +26,8 @@ function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",ma
 
     p = RecurrenceAnalysis.recurrencerate(rec_matrix)
     q = 1-p
-    println("RR is ",p)
-    println("P and Q are ",p," and ",q)
-
-    
-
-    # To do: implement map instead of for loop 
-    # sequences = map(x-> diag(Matrix(rec_matrix),x), 1:size(rec_matrix)[1])
+    println("RR is: ",p)
+    println("P and Q are: ",p," and ",q)
 
     for i in 1:max_window
         cur_len = mat_len - i
@@ -45,21 +40,21 @@ function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",ma
             zipped_tups = filter(i -> i[2] == 0, zipped_tups) # POINCARE TIMES: Tuples in which the 1st value is 1 
         end
 
-        println("Zipped tuples: ")
+        println("\n Zipped tuples: ")
         print(zipped_tups)
         println("\n Current segment length: ")
         print(cur_len)
         
         try
             max_val = maximum(first.(zipped_tups))
-            println("\nDiagonal largest sequence size and total length are")
+            println("\n Diagonal largest sequence size and total length are")
             print(max_val," and ", cur_len)
             cur_p = AnalyticComb.p_val_weighted(p,q,max_val,cur_len)
-            println("\nProbability:")
+            println("\n Probability:")
             print(cur_p)
             push!(probs,cur_p)
         catch e
-            println("\nSequence has zero occurences.")
+            println("\n Sequence has zero occurences.")
             push!(probs,NaN)
         end         
         
@@ -68,5 +63,4 @@ function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",ma
     return(probs)
 
 end
-
 
