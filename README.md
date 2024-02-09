@@ -20,7 +20,7 @@ Recurrence plots (RPs) were creature to capture such patterns and several parame
 
 Since each pair of states is mapped into a binary value ('close enough',1, or 'not close enough',0), making probabilistic inference with symbolic methods is straightforward.  
 
-The procedure in `double_inference_weighted()` iterates over [recurrence matrices](https://juliadynamics.github.io/DynamicalSystemsDocs.jl/recurrenceanalysis/stable/) diagonals and checks for repeated motives. Specifically, whether the size of the longest consecutive sequence in each off-diagonal is unexpectedly large. This may hint at underlying patterns, such as autocorrelations and periodic components.  
+The procedure in `rec_matrix_motifs()` iterates over [recurrence matrices](https://juliadynamics.github.io/DynamicalSystemsDocs.jl/recurrenceanalysis/stable/) diagonals and checks for repeated motifs. Specifically, whether the size of the longest consecutive sequence in each off-diagonal is unexpectedly large. This may hint at underlying patterns, such as autocorrelations and periodic components.  
 
 An in depth exploration of these procedures will be published soon.    
 

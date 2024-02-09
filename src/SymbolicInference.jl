@@ -8,6 +8,6 @@ using LinearAlgebra
 
 include("recurrence_plots.jl")
 
-export double_inference_weighted
+export rec_matrix_probs, rec_matrix_motifs
 
 end

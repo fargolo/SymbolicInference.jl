@@ -1,7 +1,7 @@
 name = "SymbolicInference"
 uuid = "0c4721b3-3133-403d-859d-6fdff663af57"
-authors = ["= <=> and contributors"]
-version = "1.0.0-DEV"
+authors = ["fargolo <felipe.c.argolo@protonmail.com> and contributors"]
+version = "1.0.1"
 
 [deps]
 AnalyticComb = "8a73a7cf-268c-4a55-9a00-18d79986516d"
@@ -13,6 +13,7 @@ StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [compat]
 julia = "1.9"
+AnalyticComb = "2.0.2"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
