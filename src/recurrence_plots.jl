@@ -14,7 +14,7 @@ function rec_matrix_probs(rec_matrix::RecurrenceMatrix;seqs="recurrences",max_wi
         return(NaN)
     end 
 
-    mat_len = dim(rec_matrix)
+    mat_len = size(rec_matrix,1)
     
     if mat_len < max_window
         println("'max_window' must be smaller than matrix length")
@@ -50,7 +50,7 @@ function rec_matrix_probs(rec_matrix::RecurrenceMatrix;seqs="recurrences",max_wi
             max_val = maximum(first.(zipped_tups))
             println("\n Diagonal largest sequence size and total length are")
             print(max_val," and ", cur_len)
-            cur_p = AnalyticComb.weighted_bin_runs_prob(p,q,max_val[2],cur_len)
+            cur_p = AnalyticComb.weighted_bin_runs_prob(p,q,max_val,cur_len)
             println("\n Probability:")
             print(cur_p)
             push!(probs,cur_p)
@@ -84,7 +84,7 @@ function rec_matrix_motifs(rec_matrix::RecurrenceMatrix;seqs="recurrences",max_w
         return(NaN)
     end 
 
-    mat_len = dim(rec_matrix)
+    mat_len = size(rec_matrix,1)
     
     if mat_len < max_window
         println("'max_window' must be smaller than matrix length")
@@ -146,9 +146,9 @@ function rec_matrix_motifs(rec_matrix::RecurrenceMatrix;seqs="recurrences",max_w
     
     dict_keys = ["Window","Probs","Motifs starts"]
 
-    Dict(zip(dict_keys),
+    Dict(zip(dict_keys,
         [collect(1:max_window), # Window
         probs,  # Probs
-        motifs_inds]) #Motif starts   
+        motifs_inds])) #Motif starts   
 
 end
