@@ -93,7 +93,7 @@ function rec_matrix_motifs(rec_matrix::RecurrenceMatrix;seqs="recurrences",max_w
     
     
     probs = Vector{Float64}[]
-    motifs_inds = Vector{Int64}[]
+    motifs_inds_duration = Vector{Tuple{Int64, Int64}}[]
 
     # p and q values
     p = RecurrenceAnalysis.recurrencerate(rec_matrix)
@@ -134,21 +134,22 @@ function rec_matrix_motifs(rec_matrix::RecurrenceMatrix;seqs="recurrences",max_w
             # to obtain position of current sequence  in original diagonal
         
             cur_inds = map(x -> sum(col_counts[2][1:(max_vals_inds[x]-1)]) + 1,1:n_motifs)             
-            push!(motifs_inds,cur_inds)
+            zipped_motifs_inds_duration = collect(zip(cur_inds, max_vals))
+            push!(motifs_inds_duration, zipped_motifs_inds_duration)
 
         catch e
             println("\n Sequence has zero occurences or n_motifs is larger than the number of motifs in diagonal.")
             push!(probs,NaN)
-            push!(motifs_inds,NaN) 
+            push!(motifs_inds_duration,NaN) 
         end         
         
     end
     
-    dict_keys = ["Window","Probs","Motifs starts"]
+    dict_keys = ["Window","Probs","Motifs starts and duration"]
 
     Dict(zip(dict_keys,
         [collect(1:max_window), # Window
         probs,  # Probs
-        motifs_inds])) #Motif starts   
+        motifs_inds_duration])) #Motif starts   
 
 end
