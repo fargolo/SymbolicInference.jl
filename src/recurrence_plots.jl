@@ -153,3 +153,27 @@ function rec_matrix_motifs(rec_matrix::RecurrenceMatrix;seqs="recurrences",max_w
         motifs_inds_duration])) #Motif starts   
 
 end
+
+"""
+    get_recurrence_points_from_data(data_source::Vector{Int64}, motifs::Vector{Tuple{Int64, Int64}}, window=2)
+
+    This function returns x and y coordinates for a given window considering start and size of each motif.
+    The y coordinates are the values from data provided by the user. 
+
+"""
+function get_recurrence_points_from_data(data_source::Vector{Int64}, motifs::Vector{Tuple{Int64, Int64}}, window=2)
+    motifs_inds = Vector{Tuple{Vector{Int64}, Vector{Int64}}}()
+    y_values = Vector{Tuple{Vector{Int64}, Vector{Int64}}}()
+
+    for (start, size) in motifs[window]
+        x_range = collect(start:start+size)
+        y_range = collect(start+window:start+size+window)
+        push!(motifs_inds, (x_range, y_range))
+        push!(y_values, (data_source[start:start+size], data_source[start+window:start+size+window]))
+    end
+    
+    return Dict([
+        ("x values", motifs_inds),
+        ("y values", y_values)
+    ])
+end
