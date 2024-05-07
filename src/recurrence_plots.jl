@@ -161,19 +161,29 @@ end
     The y coordinates are the values from data provided by the user. 
 
 """
-function get_recurrence_points_from_data(data_source::Vector{Int64}, motifs::Vector{Tuple{Int64, Int64}}, window=2)
-    motifs_inds = Vector{Tuple{Vector{Int64}, Vector{Int64}}}()
-    y_values = Vector{Tuple{Vector{Int64}, Vector{Int64}}}()
+function get_recurrence_points_from_data(data_source::Vector{Float64}, motifs::Vector{Vector{Tuple{Int64, Int64}}}, probabilities::Vector{Vector{Float64}})
+    full_data_dict = Vector{Dict}()
+    for motif in motifs
 
-    for (start, size) in motifs[window]
-        x_range = collect(start:start+size)
-        y_range = collect(start+window:start+size+window)
-        push!(motifs_inds, (x_range, y_range))
-        push!(y_values, (data_source[start:start+size], data_source[start+window:start+size+window]))
+        first_item, first_size = motif[1]
+        second_item, second_size = motif[2]
+
+        first_range = first_item: first_item+first_size-1
+
+        first_current_data_y = data_source[first_range]
+
+
+        second_range = second_item: second_item+second_size-1
+        second_current_data_y = data_source[second_range]
+
+        push!(full_data_dict, Dict(
+            Symbol("first_window") => Dict("x" => collect(first_range), "y" => first_current_data_y),
+            Symbol("second_window") => Dict("x" => collect(second_range), "y" => second_current_data_y)
+        ))
     end
     
-    return Dict([
-        ("x values", motifs_inds),
-        ("y values", y_values)
-    ])
+    sorted_differences = sortperm([abs(prob[1] - prob[2]) for prob in probabilities], rev=true)
+    full_data_dict_ordered = full_data_dict[sorted_differences]
+
+    return full_data_dict_ordered
 end
