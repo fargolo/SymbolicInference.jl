@@ -173,10 +173,6 @@ function get_recurrence_points_from_data(data_source::Vector{Float64},
 
         for motif in window
             first_item, first_size = motif
-        
-            print(first_item)
-            print("\n")
-
             first_range = first_item: first_item+first_size-1
             first_current_data_y = data_source[first_range]
             
