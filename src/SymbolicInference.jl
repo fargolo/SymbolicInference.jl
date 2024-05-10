@@ -5,6 +5,8 @@ using RecurrenceAnalysis
 using AnalyticComb
 using Distributions
 using LinearAlgebra
+using Plots
+using Colors
 
 include("recurrence_plots.jl")
 
