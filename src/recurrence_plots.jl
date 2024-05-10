@@ -161,29 +161,56 @@ end
     The y coordinates are the values from data provided by the user. 
 
 """
-function get_recurrence_points_from_data(data_source::Vector{Float64}, motifs::Vector{Vector{Tuple{Int64, Int64}}}, probabilities::Vector{Vector{Float64}})
-    full_data_dict = Vector{Dict}()
-    for motif in motifs
-
-        first_item, first_size = motif[1]
-        second_item, second_size = motif[2]
-
-        first_range = first_item: first_item+first_size-1
-
-        first_current_data_y = data_source[first_range]
-
-
-        second_range = second_item: second_item+second_size-1
-        second_current_data_y = data_source[second_range]
-
-        push!(full_data_dict, Dict(
-            Symbol("first_window") => Dict("x" => collect(first_range), "y" => first_current_data_y),
-            Symbol("second_window") => Dict("x" => collect(second_range), "y" => second_current_data_y)
-        ))
-    end
+function get_recurrence_points_from_data(data_source::Vector{Float64}, 
+    motifs_dict::Dict{String, Vector}; num_windows::Int64 = 3)
     
-    sorted_differences = sortperm([abs(prob[1] - prob[2]) for prob in probabilities], rev=true)
-    full_data_dict_ordered = full_data_dict[sorted_differences]
+    sorted_probs_inds = sortperm(map(x -> minimum(x), motifs_dict["Probs"]))
+    motifs_by_window = motifs_dict["Motifs starts and duration"][sorted_probs_inds[1:num_windows]]
 
-    return full_data_dict_ordered
+    full_data_dict = []
+
+    for (index, window) in enumerate(motifs_by_window)
+
+        for motif in window
+            first_item, first_size = motif
+        
+            print(first_item)
+            print("\n")
+
+            first_range = first_item: first_item+first_size-1
+            first_current_data_y = data_source[first_range]
+            
+
+            second_item = first_item + sorted_probs_inds[index]
+            second_size = first_size
+
+            second_range = second_item: second_item+second_size -1 
+            second_current_data_y = data_source[second_range]
+
+            push!(full_data_dict, Dict("x1" => collect(first_range),  "y1" => first_current_data_y, 
+                                       "x2" => collect(second_range), "y2" => second_current_data_y))
+        end
+    end
+    return full_data_dict
+end
+
+function plot_motifs(time_series::Vector{Float64}, coordinates::Vector{Any}; 
+    plot_size=(2000, 1000), n_motifs=2)
+    p = plot(1:length(time_series), time_series, alpha=0.1, 
+    label="Time Series", size=plot_size, linewidth=5, color=:black, legend=false)
+    if n_motifs == 1
+        first_coordinate = coordinates[1]
+        plot!(p, first_coordinate["x1"], first_coordinate["y1"], linewidth=5, color=:yellow, alpha=0.3)
+        plot!(p, first_coordinate["x2"], first_coordinate["y2"], linewidth=5, color=:purple, alpha=0.4)
+    else
+        for motif in coordinates[1:n_motifs]
+            R1, G1, B1 = rand(3)
+            color = Colors.RGB(R1, G1, B1)
+            plot!(p, motif["x1"], motif["y1"], linewidth=5, color=color, alpha=0.6)
+            plot!(p, motif["x2"], motif["y2"], linewidth=5, color=color, alpha=0.8)
+            scatter!(p, motif["x1"], motif["y1"], color=color, alpha=0.6)
+            scatter!(p, motif["x2"], motif["y2"], color=color, alpha=0.8)
+        end
+    end
+    display(p)
 end
