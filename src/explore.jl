@@ -42,7 +42,7 @@ Plot motifs
 function plot_motifs(time_series::Vector{Float64}, 
     coordinates::Vector{Any}; plot_size=(2000, 1000), n_motifs=2)
 
-    pl = (Figure(size = plot_size))
+    pl = CairoMakie.Figure(size = plot_size)
     p = Axis(pl[1, 1])
     lines!(p,1:length(time_series), time_series, color=:black)
     if n_motifs == 1

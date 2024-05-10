@@ -140,7 +140,7 @@ function rec_matrix_motifs(rec_matrix::RecurrenceMatrix;seqs="recurrences",max_w
         catch e
             println("\n Sequence has zero occurences or n_motifs is larger than the number of motifs in diagonal.")
             push!(probs,NaN)
-            push!(motifs_inds_duration,NaN) 
+            push!(motifs_inds_duration,[(NaN,NaN)]) 
         end         
         
     end
