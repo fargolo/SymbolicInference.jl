@@ -34,25 +34,34 @@ function extract_recurrences(data_source::Vector{Float64},
     return full_data_dict
 end
 
+"""
+plot_motifs(time_series::Vector{Float64},coordinates::Vector{Any}; plot_size=(2000, 1000), n_motifs=2)
 
+Plot motifs
+"""
+function plot_motifs(time_series::Vector{Float64}, 
+    coordinates::Vector{Any}; plot_size=(2000, 1000), n_motifs=2)
 
-function plot_motifs(time_series::Vector{Float64}, coordinates::Vector{Any}; 
-plot_size=(2000, 1000), n_motifs=2)
-p = plot(1:length(time_series), time_series, alpha=0.1, 
-label="Time Series", size=plot_size, linewidth=5, color=:black, legend=false)
-if n_motifs == 1
-    first_coordinate = coordinates[1]
-    plot!(p, first_coordinate["x1"], first_coordinate["y1"], linewidth=5, color=:yellow, alpha=0.3)
-    plot!(p, first_coordinate["x2"], first_coordinate["y2"], linewidth=5, color=:purple, alpha=0.4)
-else
-    for motif in coordinates[1:n_motifs]
-        R1, G1, B1 = rand(3)
-        color = Colors.RGB(R1, G1, B1)
-        plot!(p, motif["x1"], motif["y1"], linewidth=5, color=color, alpha=0.6)
-        plot!(p, motif["x2"], motif["y2"], linewidth=5, color=color, alpha=0.8)
-        scatter!(p, motif["x1"], motif["y1"], color=color, alpha=0.6)
-        scatter!(p, motif["x2"], motif["y2"], color=color, alpha=0.8)
+    pl = (Figure(size = plot_size))
+    p = Axis(pl[1, 1])
+    lines!(p,1:length(time_series), time_series, color=:black)
+    if n_motifs == 1
+        first_coordinate = coordinates[1]
+        lines!(p, first_coordinate["x1"], first_coordinate["y1"], linewidth=5, color=:yellow)
+        lines!(p, first_coordinate["x2"], first_coordinate["y2"], linewidth=5, color=:purple)
+    else
+        for motif in coordinates[1:n_motifs]
+            R1, G1, B1 = rand(3)
+            rcolor = (Colors.RGB(R1, G1, B1),0.3)
+            lines!(p, motif["x1"], motif["y1"], linewidth=5, color=rcolor)
+            lines!(p, motif["x2"], motif["y2"], linewidth=5, color=rcolor)
+            CairoMakie.scatter!(p, motif["x1"], motif["y1"], color=rcolor)
+            CairoMakie.scatter!(p, motif["x2"], motif["y2"], color=rcolor)
+            CairoMakie.bracket!(p,
+                text = "p-value: "*string(round(motif["prob"],digits=3)),
+                motif["x1"][1], motif["y1"][1],
+                motif["x2"][1], motif["y2"][1], color=rcolor)
+        end
     end
-end
-display(p)
+    return pl
 end
