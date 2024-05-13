@@ -62,9 +62,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run doctests
-          shell: julia --project=docs --color=yes {0}
-          run: |
-            using Documenter: DocMeta, doctest
-            using SymbolicInference
-            DocMeta.setdocmeta!(SymbolicInference, :DocTestSetup, :(using SymbolicInference); recursive=true)
-            doctest(SymbolicInference)
+        shell: julia --project=docs --color=yes {0}
+        run: |
+          using Documenter: DocMeta, doctest
+          using SymbolicInference
+          DocMeta.setdocmeta!(SymbolicInference, :DocTestSetup, :(using SymbolicInference); recursive=true)
+          doctest(SymbolicInference)
