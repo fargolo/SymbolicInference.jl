@@ -75,7 +75,7 @@ function plot_motifs(time_series::Vector{Float64},
             CairoMakie.bracket!(p,
                 text = "window:"*string(first_coordinate["window"])*
                 "; size:"*string(first_coordinate["size"])*
-                "\n p-value: "*string(round(first_coordinate["prob"],digits=3)),,
+                "\n p-value: "*string(round(first_coordinate["prob"],digits=3)),
                 motif["x1"][1], motif["y1"][1],
                 motif["x2"][1], motif["y2"][1], color=rcolor)
         end
