@@ -7,7 +7,7 @@ using Distributions
 using LinearAlgebra
 
 using Colors
-using CairoMakie, GLMakie
+using CairoMakie
 
 
 include("rqa_interface.jl")

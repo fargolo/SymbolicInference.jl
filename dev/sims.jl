@@ -4,7 +4,7 @@
 using SymbolicInference
 using Random , Distributions
 using RecurrenceAnalysis
-using CairoMakie, GLMakie
+using CairoMakie
 using Colors
 
 cycles = 70

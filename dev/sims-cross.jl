@@ -4,7 +4,7 @@
 using SymbolicInference
 using Random , Distributions
 using RecurrenceAnalysis
-using CairoMakie, GLMakie
+using CairoMakie
 using Colors
 
 cycles = 10
@@ -45,7 +45,7 @@ coordinates = SymbolicInference.extract_recurrences_cross(time_series_sin_nois,t
 coordinates_joint = SymbolicInference.extract_recurrences_cross(time_series_sin_nois,time_series_sin,
     motifs_dict_joint;num_windows = 12)
 
-GLMakie.activate!(inline=false)
+CairoMakie.activate!(inline=false)
 p = plot_motifs_cross(time_series_sin_nois,time_series_sin,
     coordinates;n_motifs=2)
 p2 = plot_motifs_cross(time_series_sin_nois,time_series_sin,

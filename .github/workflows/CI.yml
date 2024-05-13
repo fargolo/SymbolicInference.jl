@@ -37,9 +37,7 @@ jobs:
       - uses: julia-actions/cache@v1
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1
-        with:
-          prefix: xvfb-run -s '-screen 0 1024x768x24'
-  docs:
+   docs:
     name: Documentation
     runs-on: ubuntu-latest
     permissions:
@@ -49,17 +47,12 @@ jobs:
       - run: |
           python -m pip install --upgrade pip
           pip install sympy
-    #  - run: | 
-    #     sudo apt-get update && sudo apt-get install -y xorg-dev mesa-utils xvfb libgl1 freeglut3-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev
-    # pkill Xvfb
-     # - run: DISPLAY=:0 xvfb-run -s '-screen 0 1024x768x24' julia --project -e 'using Pkg; Pkg.instantiate()'
-     # - run: DISPLAY=:0 xvfb-run -s '-screen 0 1024x768x24' julia --project -e "using TestEnv; TestEnv.activate(); include(\"test/runtests.jl\")"
       - uses: actions/checkout@v4
       - uses: julia-actions/setup-julia@v1
         with:
           version: '1'
       - name: Configure doc environment
-        shell: xvfb-run --auto-servernum --server-num=1 julia --project=docs --color=yes {0}
+        shell: julia --project=docs --color=yes {0}
         run: |
           using Pkg
           Pkg.develop(PackageSpec(path=pwd()))
@@ -69,7 +62,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run doctests
-        shell: xvfb-run --auto-servernum --server-num=1 julia --project=docs --color=yes {0}
+        shell: julia --project=docs --color=yes {0}
         run: |
           using Documenter: DocMeta, doctest
           using SymbolicInference
