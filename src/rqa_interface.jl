@@ -77,7 +77,9 @@ Argument `seqs` sets the type of consecutive sequences: either 'double' (recurre
 along with n_motifs for each diagonal.  See `AnalyticComb.weighted_bin_runs_prob` for definition of symbolic construction.  
     
 """
-function rec_matrix_motifs(rec_matrix::RecurrenceMatrix;seqs="recurrences",max_window=6,n_motifs=2)
+function rec_matrix_motifs(
+    rec_matrix::Union{RecurrenceMatrix,CrossRecurrenceMatrix,JointRecurrenceMatrix};
+    seqs="recurrences", max_window=6, n_motifs=2)
 
     if seqs ∉ ["double","recurrences","poincare"]
         println("'seqs' must be either 'double', 'recurrences' or 'poincare'")

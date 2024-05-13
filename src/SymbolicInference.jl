@@ -10,11 +10,11 @@ using Colors
 using CairoMakie, GLMakie
 
 
-include("recurrence_plots.jl")
+include("rqa_interface.jl")
 include("explore.jl")
 
 
 export rec_matrix_probs, rec_matrix_motifs,
-        extract_recurrences, plot_motifs 
+        extract_recurrences, plot_motifs, extract_recurrences_cross , plot_motifs_cross 
 
 end
