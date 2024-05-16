@@ -14,7 +14,7 @@ RecurrenceAnalysis = "639c3291-70d9-5ea2-8c5b-839eba1ee399"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [compat]
-AnalyticComb = "2.0.2"
+AnalyticComb = "2.0.4"
 Distributions = "0.25.107"
 RecurrenceAnalysis = "2.0.6"
 StatsBase = "0.34.2"

@@ -170,7 +170,7 @@ function plot_motifs_cross(time_series::Vector{Float64}, time_series2::Vector{Fl
 end
 
 """
-    extract_recurrences_cross(data_source::Vector{Float64}, data_source2::Vector{Float64},
+    extract_recurrences_joint(data_source::Vector{Float64}, data_source2::Vector{Float64},
         motifs_dict::Dict{String, Vector}; num_windows::Int64 = 3)
 
 This function returns x and y coordinates for a given window considering start and size of each motif.
@@ -215,7 +215,7 @@ function extract_recurrences_joint(data_source::Vector{Float64}, data_source2::V
 end
 
 """
-    plot_motifs_cross(time_series::Vector{Float64},time_series2::Vector{Float64},
+    plot_motifs_joint(time_series::Vector{Float64},time_series2::Vector{Float64},
         coordinates::Vector{Any}; plot_size=(2000, 1000), n_motifs=2)
 
 Plot motifs
