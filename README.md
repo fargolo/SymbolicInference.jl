@@ -12,6 +12,8 @@ This software implements algorithms that leverage analytic combinatorics to make
 
 ### Chaotic, non-linear systems and recurrence analysis  
 
+See the [white-paper](https://osf.io/preprints/osf/3ws85) and it's [repo](https://github.com/fargolo/paper-vignettes/)
+
 The recurrence of states, in the meaning that states are again arbitrarily close after some time of divergence, is a fundamental property of deterministic dynamical systems and is typical for nonlinear or chaotic systems.  
 
 Poincaré discusse this property in 1890 and it was later proved by Constantin Carathéodory (see Poincaré recurrence theorem). Further on, several techniques address recurrences in dynamical systems for inference.  
@@ -22,7 +24,9 @@ Since each pair of states is mapped into a binary value ('close enough',1, or 'n
 
 The procedure in `rec_matrix_motifs()` iterates over [recurrence matrices](https://juliadynamics.github.io/DynamicalSystemsDocs.jl/recurrenceanalysis/stable/) diagonals and checks for repeated motifs. Specifically, whether the size of the longest consecutive sequence in each off-diagonal is unexpectedly large. This may hint at underlying patterns, such as autocorrelations and periodic components.  
 
-An in depth exploration of these procedures will be published soon.    
+![](https://raw.githubusercontent.com/fargolo/paper-vignettes/master/outputs/anim3_fps15.gif)  
+![](https://raw.githubusercontent.com/fargolo/paper-vignettes/master/outputs/screen_peaks.png)  
+  
 
 ## Graphs  
 
