@@ -1,7 +1,7 @@
 name = "SymbolicInference"
 uuid = "0c4721b3-3133-403d-859d-6fdff663af57"
 authors = ["fargolo <felipe.c.argolo@protonmail.com> and contributors"]
-version = "1.0.4"
+version = "1.0.3"
 
 [deps]
 AnalyticComb = "8a73a7cf-268c-4a55-9a00-18d79986516d"
