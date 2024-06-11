@@ -41,7 +41,8 @@ end
 """
     plot_motifs(time_series::Vector{Float64},coordinates::Vector{Any}; plot_size=(2000, 1000), n_motifs=2)
 
-Plot motifs
+Plot motifs from coordinates extracted with `extract_recurrences`.  
+
 """
 function plot_motifs(time_series::Vector{Float64}, 
     coordinates::Vector{Any}; plot_size=(2000, 1000), n_motifs=2)
@@ -87,7 +88,9 @@ end
     extract_recurrences_cross(data_source::Vector{Float64}, data_source2::Vector{Float64},
         motifs_dict::Dict{String, Vector}; num_windows::Int64 = 3)
 
-This function returns x and y coordinates for a given window considering start and size of each motif.
+This function returns x and y coordinates for a given window 
+    considering start and size of each motif detected from 
+    two time-series in cross-recurrence matrices .
 The y coordinates are the values from data provided by the user. 
 
 """
@@ -126,7 +129,8 @@ end
     plot_motifs_cross(time_series::Vector{Float64},time_series2::Vector{Float64},
         coordinates::Vector{Any}; plot_size=(2000, 1000), n_motifs=2)
 
-Plot motifs
+Plot motifs from coordinates extracted with `extract_recurrences_cross`.  
+
 """
 function plot_motifs_cross(time_series::Vector{Float64}, time_series2::Vector{Float64}, 
     coordinates::Vector{Any}; plot_size=(2000, 1000), n_motifs=2)
@@ -173,7 +177,9 @@ end
     extract_recurrences_joint(data_source::Vector{Float64}, data_source2::Vector{Float64},
         motifs_dict::Dict{String, Vector}; num_windows::Int64 = 3)
 
-This function returns x and y coordinates for a given window considering start and size of each motif.
+        This function returns x and y coordinates for a given window 
+            considering start and size of each motif detected from 
+            two time-series in joint-recurrence matrices .
 The y coordinates are the values from data provided by the user. 
 
 """
@@ -204,10 +210,8 @@ function extract_recurrences_joint(data_source::Vector{Float64}, data_source2::V
 
         push!(full_data_dict, Dict(
         "x1" => collect(motif_range), "x2" => collect(motif_rec_range), 
-        "ya1" => motif_ya1, 
-        "ya2" => motif_ya2,
-        "yb1" => motif_yb1,
-        "yb2" => motif_yb2,
+        "ya1" => motif_ya1, "ya2" => motif_ya2,
+        "yb1" => motif_yb1, "yb2" => motif_yb2,
         "window" => motif_window, "size" => motif_size,
         "prob" => probs_flat[sorted_probs_inds][index]))
     end
@@ -218,7 +222,7 @@ end
     plot_motifs_joint(time_series::Vector{Float64},time_series2::Vector{Float64},
         coordinates::Vector{Any}; plot_size=(2000, 1000), n_motifs=2)
 
-Plot motifs
+Plot motifs from coordinates extracted with `extract_recurrences_joint`.  
 """
 function plot_motifs_joint(time_series::Vector{Float64}, time_series2::Vector{Float64}, 
     coordinates::Vector{Any}; plot_size=(2000, 1000), n_motifs=2)

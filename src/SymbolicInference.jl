@@ -19,7 +19,7 @@ export rec_matrix_probs, rec_matrix_motifs,
         extract_recurrences, plot_motifs, 
         extract_recurrences_cross , plot_motifs_cross ,
         extract_recurrences_joint , plot_motifs_joint ,
-        persistence_motifs
+        persistence_motifs, persistence_barcode
         
 
 end

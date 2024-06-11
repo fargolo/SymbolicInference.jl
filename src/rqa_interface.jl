@@ -1,16 +1,16 @@
 """
-    rec_matrix_motifs(rec_matrix::RecurrenceMatrix;seqs="recurrences",max_window=6,n_motifs=2)
+    rec_matrix_motifs(rec_matrix::RecurrenceMatrix;seqs="recurrences",window_range=collect(1:6),n_motifs=2)
 
 Returns set of probabilities associated with consecutive runs in off-diagonals.
 
 Argument `seqs` sets the type of consecutive sequences: either 'double' (recurrences and non-recurrences), 
-'recurrences' or 'poincare' (non-recurrences).  The first n diagonals (given by `max_window` argument) are considered,
+'recurrences' or 'poincare' (non-recurrences).  The diagonals given by `window_range` argument are considered,
 along with n_motifs for each diagonal.  See `AnalyticComb.weighted_bin_runs_prob` for definition of symbolic construction.  
     
 """
 function rec_matrix_motifs(
     rec_matrix::Union{RecurrenceMatrix,CrossRecurrenceMatrix,JointRecurrenceMatrix};
-    seqs="recurrences", max_window=6, n_motifs=2)
+    seqs="recurrences", window_range=collect(1:6), n_motifs=2)
 
     if seqs ∉ ["double","recurrences","poincare"]
         println("'seqs' must be either 'double', 'recurrences' or 'poincare'")
@@ -19,8 +19,8 @@ function rec_matrix_motifs(
 
     mat_len = size(rec_matrix,1)
     
-    if mat_len < max_window
-        println("'max_window' must be smaller than matrix length")
+    if mat_len < window_range[end]
+        println("Largest range in 'window_range' must be smaller than matrix length")
         return(NaN)
     end 
     
@@ -31,10 +31,10 @@ function rec_matrix_motifs(
     # p and q values
     p = RecurrenceAnalysis.recurrencerate(rec_matrix)
     q = 1-p
-    println("RR is: ",p)
+    println("\n RR is: ",p)
     println("P and Q are: ",p," and ",q)
 
-    for i in 1:max_window
+    for i in window_range
         # add Try catch to entire loop over window
         try
             cur_len = mat_len - i
@@ -42,9 +42,9 @@ function rec_matrix_motifs(
             zipped_tups = collect(zip(col_counts[2],col_counts[1]))
             
             if seqs == "recurrences"
-                zipped_tups = filter(i -> i[2] == 1, zipped_tups) # RECURRENCES: Tuples in which the 1st value is 1 
+                zipped_tups = filter(x -> x[2] == 1, zipped_tups) # RECURRENCES: Tuples in which the 1st value is 1 
             elseif seqs == "poincare"
-                zipped_tups = filter(i -> i[2] == 0, zipped_tups) # POINCARE TIMES: Tuples in which the 1st value is 1 
+                zipped_tups = filter(x -> x[2] == 0, zipped_tups) # POINCARE TIMES: Tuples in which the 1st value is 1 
             end
 
             println("\n Zipped tuples: ")
@@ -81,7 +81,7 @@ function rec_matrix_motifs(
     dict_keys = ["Window","Probs","Motifs starts and duration"]
 
     Dict(zip(dict_keys,
-        [collect(1:max_window), # Window
+        [window_range, # Window
         probs,  # Probs
         motifs_inds_duration])) #Motif starts   
 

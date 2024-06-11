@@ -25,8 +25,11 @@ white_n_time_series = rand(dist,n_sample)
 # Noisy sine wave
 time_series_sin_nois = white_n_time_series .+ time_series_sin
 
-pl_persist_p = persistence_motifs(time_series_sin;n_windows=30)
+pl_persist_p = persistence_motifs(time_series_sin_nois;n_windows=30)
 pl_persist_bar = persistence_barcode(time_series_sin_nois;n_windows=30)
+
+
+#CairoMakie.save("../paper-vignettes/outputs/persist_sin_nois.png",
 
 res_recs = map(x -> RecurrenceAnalysis.RecurrenceMatrix(x,rec_rate;fixedrate=true),
     [time_series_sin,white_n_time_series,time_series_sin_nois])

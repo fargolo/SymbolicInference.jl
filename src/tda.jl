@@ -1,9 +1,16 @@
+"""
+    persistence_motifs(time_series; range = collect(0.1:0.1:0.9), n_windows=10)
+
+Returns curves for p-values vs. Recurrence rate in each window.  
+
+"""
+
 function persistence_motifs(time_series; range = collect(0.1:0.1:0.9), n_windows=10)
     all_motifs = []
 
     for cur_range in range
         time_series_mat = RecurrenceAnalysis.RecurrenceMatrix(time_series, cur_range; fixedrate=true)
-        motifs_result = SymbolicInference.rec_matrix_motifs(time_series_mat; max_window = n_windows, n_motifs=1)
+        motifs_result = SymbolicInference.rec_matrix_motifs(time_series_mat; window_range = collect(1:n_windows), n_motifs=1)
         push!(all_motifs, motifs_result)
     end
 
@@ -24,12 +31,19 @@ function persistence_motifs(time_series; range = collect(0.1:0.1:0.9), n_windows
     fig
 end
 
+"""
+persistence_barcode(time_series; range = collect(0.1:0.1:0.9), n_windows=10,alpha_thresh=0.05)
+
+Return barcode plot for each window. 
+    Points are plotted whenever the p-value is smaller than `alpha_thresh`.  
+
+"""
 function persistence_barcode(time_series; range = collect(0.1:0.1:0.9), n_windows=10,alpha_thresh=0.05)
     all_motifs = []
 
     for cur_range in range
         time_series_mat = RecurrenceMatrix(time_series, cur_range; fixedrate=true)
-        motifs_result = rec_matrix_motifs(time_series_mat; max_window=n_windows, n_motifs=1)
+        motifs_result = rec_matrix_motifs(time_series_mat; window_range=collect(1:n_windows), n_motifs=1)
         push!(all_motifs, motifs_result)
     end
 
@@ -46,8 +60,3 @@ function persistence_barcode(time_series; range = collect(0.1:0.1:0.9), n_window
     end
     fig
 end
-
-# Example usage
-#time_series = rand(100) # Replace with your actual time series data
-#fig = persistence_barcode(time_series)
-#display(fig)
