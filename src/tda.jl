@@ -1,8 +1,7 @@
 """
     persistence_motifs(time_series; range = collect(0.1:0.1:0.9), n_windows=10)
 
-Returns curves for p-values vs. Recurrence rate in each window.  
-
+Returns curves for p-values vs. recurrence rate in each window.  
 """
 
 function persistence_motifs(time_series; range = collect(0.1:0.1:0.9), n_windows=10)
@@ -32,11 +31,10 @@ function persistence_motifs(time_series; range = collect(0.1:0.1:0.9), n_windows
 end
 
 """
-persistence_barcode(time_series; range = collect(0.1:0.1:0.9), n_windows=10,alpha_thresh=0.05)
+    persistence_barcode(time_series; range = collect(0.1:0.1:0.9), n_windows=10,alpha_thresh=0.05)
 
 Return barcode plot for each window. 
-    Points are plotted whenever the p-value is smaller than `alpha_thresh`.  
-
+Points are plotted whenever the p-value is smaller than `alpha_thresh`.  
 """
 function persistence_barcode(time_series; range = collect(0.1:0.1:0.9), n_windows=10,alpha_thresh=0.05)
     all_motifs = []
@@ -62,11 +60,10 @@ function persistence_barcode(time_series; range = collect(0.1:0.1:0.9), n_window
 end
 
 """
-persistence_barcode(time_series1,time_series2; range = collect(0.1:0.1:0.9), n_windows=10,alpha_thresh=0.05)
+    persistence_barcode(time_series1,time_series2; range = collect(0.1:0.1:0.9), n_windows=10,alpha_thresh=0.05)
 
 Return barcode plot for each window. 
-    Points are plotted whenever the p-value is smaller than `alpha_thresh`.  
-
+Points are plotted whenever the p-value is smaller than `alpha_thresh`.  
 """
 function persistence_barcode(time_series1,time_series2; 
     range = collect(0.1:0.1:0.9), n_windows=10,alpha_thresh=0.05)
