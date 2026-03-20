@@ -3,10 +3,9 @@
 
 Returns set of probabilities associated with consecutive runs in off-diagonals.
 
-Argument `seqs` sets the type of consecutive sequences: either 'double' (recurrences and non-recurrences), 
+Argument `seqs` sets the type of consecutive sequences: either 'double' (recurrences and non-recurrences),
 'recurrences' or 'poincare' (non-recurrences).  The diagonals given by `window_range` argument are considered,
-along with n_motifs for each diagonal.  See `AnalyticComb.weighted_bin_runs_prob` for definition of symbolic construction.  
-    
+along with `n_motifs` for each diagonal.  See [`AnalyticComb.weighted_bin_runs_prob`](@ref) for definition of symbolic construction.
 """
 function rec_matrix_motifs(
     rec_matrix::Union{RecurrenceMatrix,CrossRecurrenceMatrix,JointRecurrenceMatrix};
