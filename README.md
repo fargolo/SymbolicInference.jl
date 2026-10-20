@@ -26,6 +26,24 @@ The procedure in `rec_matrix_motifs()` iterates over [recurrence matrices](https
 
 ![](https://raw.githubusercontent.com/fargolo/paper-vignettes/master/outputs/anim3_fps15.gif)  
 ![](https://raw.githubusercontent.com/fargolo/paper-vignettes/master/outputs/screen_peaks.png)  
+
+### Analytical Hypothesis Testing for RQA Metrics via Marked BGFs
+
+Using marked Bivariate Generating Functions from `AnalyticComb.jl` (`weighted_bin_runs_moments`), `rqa_moments_test` and `plot_rqa_moments` provide exact analytical means, variances, standardized $Z$-scores, and $p$-values for RQA diagonal statistics (**Determinism ($DET$)**, motif counts, and line-length histograms) without surrogate shuffling:
+
+```julia
+using RecurrenceAnalysis, SymbolicInference
+
+rm = RecurrenceMatrix(noisy_sin, 0.35; fixedrate=true)
+res = rqa_moments_test(rm; lmin=3, window_range=collect(1:30), metric="determinism")
+fig = plot_rqa_moments(res; title_prefix="Noisy Sine Wave (DET points, lmin=3)")
+```
+
+![Noisy Sine Wave RQA Moments Test](docs/src/assets/rqa_moments_noisy_sin.png)
+![White Noise RQA Moments Test](docs/src/assets/rqa_moments_white_noise.png)
+
+See the [full RQA Moments Vignette](docs/src/vignette_moments.md) for details.
+
   
 
 ## Graphs  

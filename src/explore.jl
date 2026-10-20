@@ -275,3 +275,61 @@ function plot_motifs_joint(time_series::Vector{Float64}, time_series2::Vector{Fl
     end
     return pl
 end
+
+
+"""
+    plot_rqa_moments(moments_dict::Dict{String, Any}; title_prefix="", plot_size=(1200, 480), z_thresh=1.96)
+
+Plot the results of [`rqa_moments_test`](@ref) across off-diagonal windows:
+- **Left panel**: Observed statistic vs. exact analytical expected value ``\\mu_i`` and ``\\pm z_{\\text{thresh}} \\sigma_i`` null band.
+- **Right panel**: Standardized ``Z``-scores per off-diagonal window along with the global aggregated ``Z``-score and ``p``-value.
+"""
+function plot_rqa_moments(moments_dict::Dict{String, Any}; title_prefix="", plot_size=(1200, 500), z_thresh=1.96)
+    windows = moments_dict["Window"]
+    obs = moments_dict["Observed"]
+    exp_val = moments_dict["Expected"]
+    std_val = moments_dict["Std"]
+    z_scores = moments_dict["ZScores"]
+    glob = moments_dict["Global"]
+
+    fig = CairoMakie.Figure(size = plot_size)
+    if !isempty(title_prefix)
+        CairoMakie.Label(fig[0, 1:2], title_prefix, fontsize = 18, font = :bold)
+    end
+
+    ax1 = CairoMakie.Axis(
+        fig[1, 1],
+        title = "Observed vs. Analytical Null (μ ± $(z_thresh)σ)",
+        xlabel = "Off-diagonal Window (Lag)",
+        ylabel = "Run Statistic"
+    )
+    lower = max.(0.0, exp_val .- z_thresh .* std_val)
+    upper = exp_val .+ z_thresh .* std_val
+    CairoMakie.band!(ax1, windows, lower, upper, color = (:royalblue, 0.22), label = "Null μ ± $(z_thresh)σ")
+    CairoMakie.lines!(ax1, windows, exp_val, color = :royalblue, linestyle = :dash, linewidth = 2, label = "Analytical Mean (μ)")
+    CairoMakie.lines!(ax1, windows, obs, color = :crimson, linewidth = 2.5, label = "Observed")
+    CairoMakie.scatter!(ax1, windows, obs, color = :crimson, markersize = 8)
+    CairoMakie.axislegend(ax1, position = :rt)
+
+    glob_title = string(
+        "Window Z-Scores (Global Z = ",
+        round(glob.z_score, digits=2),
+        ", p = ",
+        round(glob.p_value, sigdigits=3),
+        ")"
+    )
+    ax2 = CairoMakie.Axis(
+        fig[1, 2],
+        title = glob_title,
+        xlabel = "Off-diagonal Window (Lag)",
+        ylabel = "Standardized Z-Score"
+    )
+    CairoMakie.hlines!(ax2, [0.0], color = :gray60, linewidth = 1)
+    CairoMakie.hlines!(ax2, [z_thresh], color = :darkorange, linestyle = :dash, linewidth = 2, label = "Z = $(z_thresh)")
+    CairoMakie.lines!(ax2, windows, z_scores, color = :darkslategray, linewidth = 2)
+    pt_colors = [z > z_thresh ? :crimson : :steelblue for z in z_scores]
+    CairoMakie.scatter!(ax2, windows, z_scores, color = pt_colors, markersize = 9)
+    CairoMakie.axislegend(ax2, position = :rt)
+
+    return fig
+end

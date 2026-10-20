@@ -16,10 +16,12 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "RQA Moments Vignette" => "vignette_moments.md",
     ],
 )
 
 deploydocs(;
     repo="github.com/fargolo/SymbolicInference.jl",
     devbranch="main",
+    push_preview=true,
 )

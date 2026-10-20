@@ -15,7 +15,7 @@ include("explore.jl")
 include("tda.jl")
 
 
-export rec_matrix_probs, rec_matrix_motifs,
+export rec_matrix_probs, rec_matrix_motifs, rqa_moments_test, plot_rqa_moments,
         extract_recurrences, plot_motifs, 
         extract_recurrences_cross , plot_motifs_cross ,
         extract_recurrences_joint , plot_motifs_joint ,
