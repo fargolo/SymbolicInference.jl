@@ -6,7 +6,7 @@ DocMeta.setdocmeta!(SymbolicInference, :DocTestSetup, :(using SymbolicInference)
 makedocs(;
     modules=[SymbolicInference],
     authors="= <=> and contributors",
-    repo="https://github.com/fargolo/SymbolicInference.jl/blob/{commit}{path}#{line}",
+    repo=Documenter.Remotes.GitHub("fargolo", "SymbolicInference.jl"),
     sitename="SymbolicInference.jl",
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
